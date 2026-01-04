@@ -3,23 +3,32 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Categoria; // 👈 IMPORTANTE
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Josue',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('1234'), // 👈 string
         ]);
+
+        Categoria::create(['nombre' => 'Alimentación', 'tipo' => 'gasto']);
+        Categoria::create(['nombre' => 'Transporte', 'tipo' => 'gasto']);
+        Categoria::create(['nombre' => 'Salud', 'tipo' => 'gasto']);
+        Categoria::create(['nombre' => 'Entrenamiento', 'tipo' => 'gasto']);
+        Categoria::create(['nombre' => 'Sueldos', 'tipo' => 'gasto']);
+        Categoria::create(['nombre' => 'Inversiones', 'tipo' => 'gasto']);
+        Categoria::create(['nombre' => 'Otros', 'tipo' => 'ingreso']);
+        Categoria::create(['nombre' => 'Ahorros', 'tipo' => 'ingreso']);
+        Categoria::create(['nombre' => 'Otros ingresos', 'tipo' => 'ingreso']);
+        Categoria::create(['nombre' => 'Otros gastos', 'tipo' => 'gasto']);
     }
 }
