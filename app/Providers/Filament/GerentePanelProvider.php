@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Models\User;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -11,9 +10,9 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use App\Filament\Admin\Widgets\AdminStatsWidget;
-use App\Filament\Admin\Widgets\VentasPorDiaWidget;
-use App\Filament\Admin\Widgets\ProductosMasVendidosWidget;
+use App\Filament\Gerente\Widgets\GerenteStatsWidget;
+use App\Filament\Gerente\Widgets\VentasPorDiaWidget;
+use App\Filament\Gerente\Widgets\VentasPorMetodoPagoWidget;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -22,25 +21,24 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class GerentePanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('gerente')
+            ->path('gerente')
             ->login()
-            ->colors(['primary' => Color::Violet])
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
-            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
+            ->colors(['primary' => Color::Amber])
+            ->discoverResources(in: app_path('Filament/Gerente/Resources'), for: 'App\\Filament\\Gerente\\Resources')
+            ->discoverPages(in: app_path('Filament/Gerente/Pages'), for: 'App\\Filament\\Gerente\\Pages')
+            ->discoverWidgets(in: app_path('Filament/Gerente/Widgets'), for: 'App\\Filament\\Gerente\\Widgets')
             ->pages([Dashboard::class])
             ->widgets([
                 AccountWidget::class,
-                AdminStatsWidget::class,
+                GerenteStatsWidget::class,
                 VentasPorDiaWidget::class,
-                ProductosMasVendidosWidget::class,
+                VentasPorMetodoPagoWidget::class,
             ])
             ->authGuard('web')
             ->authMiddleware([Authenticate::class])

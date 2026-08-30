@@ -11,9 +11,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use App\Filament\Admin\Widgets\AdminStatsWidget;
-use App\Filament\Admin\Widgets\VentasPorDiaWidget;
-use App\Filament\Admin\Widgets\ProductosMasVendidosWidget;
+use App\Filament\Cajero\Widgets\CajeroStatsWidget;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -22,25 +20,22 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class CajeroPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('cajero')
+            ->path('cajero')
             ->login()
-            ->colors(['primary' => Color::Violet])
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
-            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
+            ->colors(['primary' => Color::Emerald])
+            ->discoverResources(in: app_path('Filament/Cajero/Resources'), for: 'App\\Filament\\Cajero\\Resources')
+            ->discoverPages(in: app_path('Filament/Cajero/Pages'), for: 'App\\Filament\\Cajero\\Pages')
+            ->discoverWidgets(in: app_path('Filament/Cajero/Widgets'), for: 'App\\Filament\\Cajero\\Widgets')
             ->pages([Dashboard::class])
             ->widgets([
                 AccountWidget::class,
-                AdminStatsWidget::class,
-                VentasPorDiaWidget::class,
-                ProductosMasVendidosWidget::class,
+                CajeroStatsWidget::class,
             ])
             ->authGuard('web')
             ->authMiddleware([Authenticate::class])

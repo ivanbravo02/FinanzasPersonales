@@ -9,18 +9,10 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'role_id',
     ];
 
     /**
@@ -36,13 +28,28 @@ class User extends Authenticatable
         ];
     }
 
-    /*relacion de uno a muchos con el modelo movimiento*/ 
-    public function movimientos(){
-        return $this->hasMany(Movimiento::class);
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
-    /*relacion de uno a muchos con el modelo presupuesto*/ 
-    public function presupuestos(){
-        return $this->hasMany(Presupuesto::class);
+    public function hasRole(string $role): bool
+    {
+        return $this->role?->nombre === $role;
+    }
+
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class);
+    }
+
+    public function cortesCaja()
+    {
+        return $this->hasMany(CorteCaja::class);
+    }
+
+    public function corteCajaActivo()
+    {
+        return $this->cortesCaja()->where('estado', 'abierto')->latest()->first();
     }
 }
